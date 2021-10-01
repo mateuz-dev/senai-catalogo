@@ -6,6 +6,10 @@
 
     $sql = "SELECT * FROM tbl_Categoria WHERE id = $idCategoria";
 
+    $resultado = mysqli_query($conexao, $sql);
+
+    $idCategoria = mysqli_fetch_array($resultado);
+
 ?>
 
 
@@ -52,7 +56,7 @@
 
                     <div class="input-group span2">
                         <label for="descricao">Descrição</label>
-                        <input type="text" name="descricao" id="descricao"/>
+                        <input type="text" name="descricao" id="descricao" value="<?php echo $idCategoria["descricao"]; ?>"/>
                     </div>
 
                     <button type="button" onclick="javascript:window.location.href = 'index.php'">Cancelar</button>
