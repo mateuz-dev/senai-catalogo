@@ -1,11 +1,32 @@
 <?php
 
+session_start();
+
 require ("../database/conexao.php");
+
+
+function validaCampos(){
+
+    $erros = [];
+
+    if(!isset($_POST['descricao']) || $_POST['descricao'] == " "){
+        $erros[] = "O campo descrição é de Preenchimento Obrigatório!";
+    }
+    return $erros;
+}
 
 
 
 switch ($_POST["acao"]) {
     case 'inserir':
+
+        $erros = validaCampos();
+
+        if(count($erros) > 0){
+            $_SESSION["erros"] = $erros;
+            header("location: index.php");
+            exit();
+        }
         
         $descricao = $_POST["descricao"];
 
@@ -24,7 +45,22 @@ switch ($_POST["acao"]) {
         echo '</pre>'; */
 
         break;
+
+
+
+        case 'deletar':
+            $categoriaId = $_POST["categoriaId"];
+
+            $sql = "DELETE FROM tbl_categoria WHERE id = $categoriaId";
+
+            $resultado = mysqli_query($conexao, $sql);
+
+            header("location: index.php");
+
+            exit;
     
+
+
     default:
         # code...
         break;
