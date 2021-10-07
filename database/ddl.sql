@@ -1,4 +1,4 @@
-create database icatalogo;
+	create database icatalogo;
 
 use icatalogo;
 
