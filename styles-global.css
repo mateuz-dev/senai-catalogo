@@ -3,8 +3,8 @@
 }
 
 :root {
-  --accentPrimary: #d4df3e;
-  --accentSecondary: #8a9211;
+  --accentPrimary: #c3c2c2dc;
+  --accentSecondary: #FFFFFF;
   --textPrimary: #111111;
   --textSecundary: #2e2e2e;
   --backgroundPrimary: #eeeeee;
@@ -12,6 +12,7 @@
   --boxBorder: #929292;
   --boxShadow: #c3c2c2dc;
   --overlay: #c3c2c2dc;
+  --orangeTxt: #E16700;
 }
 
 body {
@@ -60,7 +61,7 @@ button {
   height: 40px;
 
   border: 2px solid transparent;
-  color: var(--accentSecondary);
+  color: var(--orangeTxt);
   border-radius: 6px;
   font-weight: bold;
   font-size: 14px;
