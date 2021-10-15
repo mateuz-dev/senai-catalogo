@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 require ("../../database/conexao.php");
 
 $sql = "SELECT * FROM tbl_categoria";
@@ -19,7 +21,8 @@ $resultado = mysqli_query($conexao, $sql);
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../../styles-global.css" />
   <link rel="stylesheet" href="./novo.css" />
-  <title>Administrar Produtos</title>
+  <link rel="shortcut icon" href="../../imgs/logo.png" type="image/x-icon">
+  <title>WE | PRODUTOS</title>
 
 </head>
 
@@ -39,26 +42,35 @@ $resultado = mysqli_query($conexao, $sql);
 
           <ul>
 
+            <?php
+              // if (isset($_SESSION["erros"])) {
+              //   foreach($_SESSION["erros"] as $erro){
+              //     echo "<li> $erro </li>";
+              //   }
+              //   unset($_SESSION["erros"]);
+              // }
+            ?>
+
           </ul>
 
           <div class="input-group span2">
             <label for="descricao">Descrição</label>
-            <input type="text" name="descricao" id="descricao" required>
+            <input type="text" name="descricao" id="descricao">
           </div>
 
           <div class="input-group">
             <label for="peso">Peso</label>
-            <input type="text" name="peso" id="peso" required>
+            <input type="text" name="peso" id="peso">
           </div>
 
           <div class="input-group">
             <label for="quantidade">Quantidade</label>
-            <input type="text" name="quantidade" id="quantidade" required>
+            <input type="text" name="quantidade" id="quantidade">
           </div>
 
           <div class="input-group">
             <label for="cor">Cor</label>
-            <input type="text" name="cor" id="cor" required>
+            <input type="text" name="cor" id="cor">
           </div>
 
           <div class="input-group">
@@ -68,7 +80,7 @@ $resultado = mysqli_query($conexao, $sql);
 
           <div class="input-group">
             <label for="valor">Valor</label>
-            <input type="text" name="valor" id="valor" required>
+            <input type="text" name="valor" id="valor">
           </div>
 
           <div class="input-group">
@@ -79,7 +91,7 @@ $resultado = mysqli_query($conexao, $sql);
           <div class="input-group">
 
             <label for="categoria">Categoria</label>
-            <select id="categoria" name="categoria" required>
+            <select id="categoria" name="categoria">
 
               <option value="">SELECIONE</option>
 

@@ -19,7 +19,8 @@ $resultado = mysqli_query($conexao, $sql);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../styles-global.css" />
     <link rel="stylesheet" href="./produtos.css" />
-    <title>Administrar Produtos</title>
+    <link rel="shortcut icon" href="../imgs/logo.png" type="image/x-icon">
+    <title>WE | STORE</title>
 
 </head>
 
