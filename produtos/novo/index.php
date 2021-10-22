@@ -22,11 +22,13 @@ $resultado = mysqli_query($conexao, $sql);
   <link rel="stylesheet" href="../../styles-global.css" />
   <link rel="stylesheet" href="./novo.css" />
   <link rel="shortcut icon" href="../../imgs/logo.png" type="image/x-icon">
-  <title>WE | PRODUTOS</title>
+  <title>WE | NOVO PRODUTO</title>
 
 </head>
 
 <body>
+
+  <?php include('../../componentes/header/header.php'); ?>
 
   <div class="content">
 
@@ -43,12 +45,12 @@ $resultado = mysqli_query($conexao, $sql);
           <ul>
 
             <?php
-              // if (isset($_SESSION["erros"])) {
-              //   foreach($_SESSION["erros"] as $erro){
-              //     echo "<li> $erro </li>";
-              //   }
-              //   unset($_SESSION["erros"]);
-              // }
+              if (isset($_SESSION["erros"])) {
+                foreach($_SESSION["erros"] as $erro){
+                  echo "<li> $erro </li>";
+                }
+                unset($_SESSION["erros"]);
+              }
             ?>
 
           </ul>

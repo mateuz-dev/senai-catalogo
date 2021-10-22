@@ -40,6 +40,18 @@
         }
 
 
+        // desconto
+        if ($_POST["desconto"] == "" || !isset($_POST["desconto"])) {
+            
+            $erros[] = "O CAMPO DESCONTO É OBRIGATÓRIO";
+
+        } elseif (!is_numeric(str_replace(",", ".", $_POST["desconto"]))) {
+            
+            $erros[] = "O CAMPO DESCONTO DEVE SER UM NUMERO";
+
+        }
+
+
         // categoria
         if ($_POST["categoria"] = "" || !isset($_POST["categoria"])){
             $erros[] = "O campo CATEGORIA é OBRIGATÓRIO";  
@@ -70,8 +82,9 @@
 
         // imagem
         if ($_FILES["foto"]["error"] == UPLOAD_ERR_NO_FILE){
-            $erros[] = "O arquivo PRECISA SER UMA IMAGEM";
-        } else{
+            $erros[] = "O campo Imagem PRECISA de uma IMAGEM";
+        } 
+        else{
             $imagemInfos = getimagesize($_FILES["foto"]["tmp"]);
 
             if ($_FILES["foto"]["size"] > 1024 * 1024 * 2) {
@@ -93,52 +106,17 @@
 
     switch($_POST["acao"]){
 
-        case 'deletar':
-            $produtoId = $_POST["produtoId"];
-
-            $sql = "SELECT imagem FROM tbl_categoria WHERE id = $produtoId";
-            
-            $resultado = mysqli_query($conexao, $sql);
-            
-            $produto = mysqli_fetch_array($resultado);
-            
-            $sql = "DELETE FROM tbl_produto WHERE id = $produtoId";
-
-            $resultado = mysqli_query($conexao, $sql);
-
-            unlink("./fotos/" . $produto["imagem"]);
-
-            header("location: index.php");
-
-            exit;
-
-
-
-        case "editar":
-            $id = $_POST["id"];
-            $descricao = $_POST["descricao"];
-
-            $sql = "UPDATE tbl_produto SET descricao = '$descricao' WHERE id = $id";
-
-            $resultado = mysqli_query($conexao, $sql);
-
-            header("location: index.php");
-
-            break;
-
-
-
         case "inserir":
 
-            // $erros = validarCampos();
+            $erros = validarCampos();
 
-            // if (count($erros) > 0){
-            //     $_SESSION["erros"] = $erros;
+            if (count($erros) > 0){
+                $_SESSION["erros"] = $erros;
 
-            //     header("location: novo/index.php");
+                header("location: novo/index.php");
 
-            //     exit;
-            // }
+                exit;
+            }
 
             // TRATAMENTO DA IMAGEM PARA UPLOAD:
             $nomeArquivo = $_FILES["foto"]["name"];
@@ -169,7 +147,129 @@
 
             header("location: ./novo/index.php");
 
+        break;
+
+
+
+        case "deletar":
+
+            $produtoId = $_POST["produtoId"];
+    
+            $sql = "SELECT imagem FROM tbl_produto WHERE id = $produtoId";
+    
+            $resultado = mysqli_query($conexao, $sql);
+    
+            $produto = mysqli_fetch_array($resultado);
+    
+            // echo $produto[0];exit;
+    
+            $sql = "DELETE FROM tbl_produto WHERE id = $produtoId";
+    
+            $resultado = mysqli_query($conexao, $sql);
+    
+            unlink("./fotos/" . $produto[0]);
+    
+            header("location: index.php");
+    
+        break;
+        
+    
+
+        case "editar":
+
+            $produtoId = $_POST["produtoId"];
+
+            $erros = validarCampos();
+
+            if (count($erros) > 0){
+                $_SESSION["erros"] = $erros;
+
+                header("location: editar/index.php id=".$produtoId);
+
+                exit;
+            }
+
+            /** ATUALIZANDO A IMAGEM DO PRODUTO **/
+
+            
+
+            if($_FILES["foto"]["error"] != UPLOAD_ERR_NO_FILE){
+
+                $sqlImagem = "SELECT imagem FROM tbl_produto WHERE id = $produtoId";
+                
+                $resultado = mysqli_query($conexao, $sqlImagem);
+                $produto = mysqli_fetch_array($resultado);
+
+                // echo $_FILES["foto"]["name"];
+                // echo '<br />';
+                // echo '/fotos/' . $produto["imagem"];
+                // exit;
+
+                //EXCLUSÃO DA FOTO (ARQUIVO) ANTIGA DA PASTA
+                unlink("./fotos/" . $produto["imagem"]);
+
+                //RECUPERA O NOME ORIGINAL DA IMAGEM E ARMAZENA NA VARIÁVEL
+                $nomeArquivo = $_FILES["foto"]["name"];
+
+                //EXTRAI A EXTENSÃO DO AQUIVO DE IMAGEM
+                $extensao = pathinfo($nomeArquivo, PATHINFO_EXTENSION);
+
+                //DEFINE UM NOME ALEATORIO PARA A IMAGEM QUE SERÁ ARMAZENA
+                //NA PASTA "fotos"
+                $novoNomeArquivo = md5(microtime()) . ".$extensao";
+
+                //REALIZAMOS O UPLOAD DA IMAGEM COM O NOVO NOME
+                move_uploaded_file($_FILES["foto"]["tmp_name"], "fotos/$novoNomeArquivo");
+
+            }
+
+
+            /** CAPTURA OS DADOS DE TEXTO E DE NUMERO **/
+            $descricao = $_POST["descricao"];
+
+            $peso = str_replace(".", "", $_POST["peso"]);
+            $peso = str_replace(",", ".", $peso);
+            
+            $valor = str_replace(".", "", $_POST["valor"]);
+            $valor = str_replace(",", ".", $valor);
+
+            $quantidade = $_POST["quantidade"];
+            $cor = $_POST["cor"];
+            $tamanho = $_POST["tamanho"];
+            $desconto = $_POST["desconto"];
+            $categoriaId = $_POST["categoria"];
+
+
+            /** MONTAGEM E EXECUÇÃO DA INSTRUÇÃO SQL DE UPDATE **/
+
+            $sqlUpdate = "UPDATE tbl_produto SET 
+                          descricao = '$descricao',
+                          peso = $peso,
+                          quantidade = $quantidade,
+                          cor = '$cor',
+                          tamanho = '$tamanho',
+                          valor = $valor,
+                          desconto = $desconto,
+                          categoria_id = $categoriaId";
+
+            //Verifica se tem imagem nova para atualizar
+            $sqlUpdate .= isset($novoNomeArquivo) ? ", imagem = '$novoNomeArquivo'" : "";
+
+            $sqlUpdate .= " WHERE id = $produtoId"; 
+
+            // echo $sqlUpdate; exit;
+
+            $resultado = mysqli_query($conexao, $sqlUpdate);
+
+            header("location: index.php");
+
+        break;
+
+
+        default:
+            #code...
             break;
+    
     }
 
 ?>

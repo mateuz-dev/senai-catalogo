@@ -26,7 +26,7 @@
     <link rel="stylesheet" href="../styles-global.css" />
     <link rel="stylesheet" href="./categorias.css" />
     <link rel="shortcut icon" href="../imgs/logo.png" type="image/x-icon">
-    <title>WE | CATEGORIAS</title>
+    <title>WE | NOVA CATEGORIA</title>
 </head>
 
 <body>
@@ -53,6 +53,8 @@
                     <?php
                         } // fim do FOREACH
                         session_unset();
+
+                        session_destroy();
                     } // fim do IF
                     ?>
                     </ul>
