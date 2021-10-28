@@ -9,9 +9,9 @@
   $resultado = mysqli_query($conexao, $sqlProduto);
   $produto = mysqli_fetch_array($resultado);
 
-  /**** RECUPERA OS DADOS DE CATEGORIA  ****/
-  $sqlCategoria = "SELECT * FROM tbl_categoria";
-  $resultado = mysqli_query($conexao, $sqlCategoria);
+/**** RECUPERA OS DADOS DE CATEGORIA  ****/
+$sqlCategoria = "SELECT * FROM tbl_categoria";
+$resultado = mysqli_query($conexao, $sqlCategoria);
 
   // echo '<pre>';
   // var_dump($produto);
@@ -27,9 +27,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../../styles-global.css" />
-  <link rel="stylesheet" href="./editar.css" />
-  <link rel="shortcut icon" href="../../../imgs/logo.png" type="image/x-icon">
-  <title>Editar Produtos</title>
+  <link rel="stylesheet" href="editar.css" />
+  <link rel="shortcut icon" href="../../imgs/logo.png" type="image/x-icon">
+  <title>WE | Editar Produtos</title>
 
 </head>
 
@@ -50,18 +50,25 @@
           <input type="hidden" name="produtoId" value="<?php echo $produtoId?>" />
           
           <h1>Editar Produto</h1>
-
+          
           <ul>
 
-            <?php
+          <?php
+              
               if (isset($_SESSION["erros"])) {
-                foreach($_SESSION["erros"] as $erro){
+                
+                foreach ($_SESSION["erros"] as $erro) {
+                  
                   echo "<li> $erro </li>";
-                }
-                unset($_SESSION["erros"]);
-              }
-            ?>
 
+                }
+
+                unset($_SESSION["erros"]);
+
+              }
+            
+            ?>
+      
           </ul>
 
           <div class="input-group span2">
@@ -71,7 +78,7 @@
 
           <div class="input-group">
             <label for="peso">Peso</label>
-            <input type="text" name="peso" value="<?php echo $produto["peso"]?>" id="peso" >
+            <input type="text" name="peso" value="<?php echo number_format($produto["peso"], 2, ",", ".")?>" id="peso" >
           </div>
 
           <div class="input-group">

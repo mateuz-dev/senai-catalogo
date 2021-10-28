@@ -94,13 +94,12 @@ $resultado = mysqli_query($conexao, $sql);
 
             <label for="categoria">Categoria</label>
             <select id="categoria" name="categoria">
-
               <option value="">SELECIONE</option>
 
                 <?php
                   while($categoria = mysqli_fetch_array($resultado)){
                 ?>
-                  <option value="<?php echo $categoria["id"] ?>"> <?php echo $categoria["descricao"] ?></option>
+                  <option value="<?php echo $categoria["id"]?>"><?php echo $categoria["descricao"]?></option>
                 <?php } ?>
               
             </select>
