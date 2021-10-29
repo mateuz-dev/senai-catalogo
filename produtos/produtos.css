@@ -19,8 +19,8 @@
 .card-produto {
   background-color: var(--backgroundPrimary);
   width: 100%;
-  min-width: 300px;
-  max-width: 350px;
+  min-width: 350px;
+    max-width: 350px;
   position: relative;
   /* z-index: -1; */
 

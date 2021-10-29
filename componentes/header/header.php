@@ -1,4 +1,7 @@
-<?php $raiz = "/mateus/senai-icatalogo-mysqli-alunos" ?>
+<?php 
+session_start();
+$raiz = "/mateus/senai-icatalogo-mysqli-alunos"
+?>
 
 <link href="<?php echo $raiz?>/componentes/header/header.css" rel="stylesheet" />
 
@@ -16,15 +19,15 @@
     ?>
         <nav>
             <ul>
-                <a id="menu-admin">Administrar</a>
+                <a id="menu-admin">LOGIN</a>
             </ul>
         </nav>
         <div id="container-login" class="container-login">
             <h1>Fazer Login</h1>
             <form method="POST" action="../componentes/header/acoesLogin.php">
                 <input type="hidden" name="acao" value="login" />
-                <input type="text" name="usuario" placeholder="Usuário" />
-                <input type="password" name="senha" placeholder="Senha" />
+                <input type="text" name="usuario" placeholder="Usuário" required/>
+                <input type="password" name="senha" placeholder="Senha" required/>
                 <button>Entrar</button>
             </form>
         </div>
@@ -33,10 +36,10 @@
     ?>
         <nav>
             <ul>
-                <a id="menu-admin" onclick="logout()">Sair</a>
+                <a id="menu-admin" onclick="logout()">SAIR</a>
             </ul>
         </nav>
-        <form id="form-logout" style="display:none" method="POST" action="/componentes/header/acoesLogin.php">
+        <form id="form-logout" style="display:none" method="POST" action="../componentes/header/acoesLogin.php">
             <input type="hidden" name="acao" value="logout" />
         </form>
     <?php

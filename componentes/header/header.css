@@ -4,6 +4,7 @@
   width: 100%;
   background-color: var(--accentPrimary);
   color: var(--textPrimary);
+  padding-right: 3%;
 
   display: flex;
   align-items: center;
